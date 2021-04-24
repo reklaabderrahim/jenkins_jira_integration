@@ -1,9 +1,17 @@
-node {
-    stage('Example') {
-        if (env.BRANCH_NAME == 'master') {
-            echo 'I only execute on the master branch'
-        } else {
-            echo 'I execute elsewhere'
+pipeline {
+    agent any
+    stages {
+        stage('Create Jira Issue') {
+            steps {
+                script{
+                      def issue = [fields: [ project: [key: 'JKI'],
+                                             summary: 'New JIRA Created from Jenkins.',
+                                             description: 'New JIRA Created from Jenkins.',
+                                             issuetype: [name: 'Task']]]
+                      def newIssue = jiraNewIssue issue: issue, site: 'http://192.168.1.44:8001/'
+                      echo newIssue.data.key
+                }
+            }
         }
     }
 }
