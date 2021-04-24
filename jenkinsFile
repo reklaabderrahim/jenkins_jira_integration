@@ -31,7 +31,7 @@ pipeline {
                             git credentialsId: '44b99c80-194f-4e87-85ed-94b79f9cbb37', url: 'https://github.com/reklaabderrahim/jenkins_jira_integration.git'
                             sh "git branch -a"
                             sh "git checkout -B master origin/master"
-                            def changelogContext = gitChangelog from: [type: 'COMMIT', value: 'first commit'], to: [type: 'COMMIT', value: 'fix(jKI-1): gitchangelog test 10'], returnType: 'CONTEXT'
+                            def changelogContext = gitChangelog from: [type: 'COMMIT', value: 'fix(jKI-1): gitchangelog test 10'], to: [type: 'COMMIT', value: 'fix(jKI-1): gitchangelog test 13'], returnType: 'CONTEXT'
 
                             changelogContext.issues.each { issue ->
                                println issue
