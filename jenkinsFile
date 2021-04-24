@@ -4,12 +4,16 @@ pipeline {
         stage('Create Jira Issue') {
             steps {
                 script{
-                      def issue = [fields: [ project: [key: 'JKI'],
+/*                       def issue = [fields: [ project: [key: 'JKI'],
                                              summary: 'New JIRA Created from Jenkins.',
                                              description: 'New JIRA Created from Jenkins.',
                                              issuetype: [name: 'Task']]]
                       def newIssue = jiraNewIssue issue: issue, site: 'Jira Site'
-                      echo newIssue.data.key
+                      echo newIssue.data.key */
+
+                      def transitionInput = [ transition: [ id: 31] ]
+                        jiraTransitionIssue idOrKey: 'JKI_V1', input: transitionInput, site: 'Jira Site'
+                        echo jiraTransitionIssue
                 }
             }
         }
