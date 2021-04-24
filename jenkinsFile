@@ -4,7 +4,7 @@ pipeline {
         stage('Create Jira Issue') {
             steps {
                 script{
-//                       def issue = [fields: [ project: [key: 'JKI'],
+//                      def issue = [fields: [ project: [key: 'JKI'],
 //                                              summary: 'New JIRA Created from Jenkins.',
 //                                              description: 'New JIRA Created from Jenkins.',
 //                                              issuetype: [name: 'Task']]]
