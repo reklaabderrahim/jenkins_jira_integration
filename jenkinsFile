@@ -16,9 +16,8 @@ pipeline {
 
                         def searchResults = jiraJqlSearch jql: "project = jenkinsIntegration AND issuekey = 'JKI-1'", site: 'Jira Site'
                         def issues = searchResults.data.issues
-
+                        println issues.get(0)
                         for (i = 0; i <issues.size(); i++) {
-                          echo issues[i].transitions
                           def fixVersion = jiraNewVersion version: [name: "new-fix-version-1.0", project: "JKI"], site: 'Jira Site'
                           def testIssue = [fields: [fixVersions: [fixVersion.data]]]
                           response = jiraEditIssue idOrKey: issues[i].key, issue: testIssue, site: 'Jira Site'
