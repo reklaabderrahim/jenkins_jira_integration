@@ -29,8 +29,8 @@ pipeline {
 //                         }
 
                             def changelogContext = gitChangelog returnType: 'CONTEXT',
-                              from: [type: 'REF', value: 'origin/master'],
-                              to: [type: 'REF', value: 'G02R02C02']
+                              from: [type: 'REF', value: 'G02R02C02']
+                              to: [type: 'REF', value: 'origin/master'],
 
                             changelogContext.issues.each { issue ->
                                println issue
