@@ -33,6 +33,7 @@ pipeline {
                             sh "git checkout -B master origin/master"
                             def changelogContext = gitChangelog from: [type: 'REF', value: 'master'], returnType: 'CONTEXT', to: [type: 'REF', value: 'G02R02C02']
 
+
                             changelogContext.issues.each { issue ->
                                println issue
                                println issue.name
