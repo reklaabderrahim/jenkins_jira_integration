@@ -12,7 +12,7 @@ pipeline {
                       echo newIssue.data.key */
 
                       def transitionInput = [ transition: [ id: 31] ]
-                        jiraTransitionIssue idOrKey: 'JKI_V1', input: transitionInput, site: 'Jira Site'
+                        jiraTransitionIssue idOrKey: 'JKI-1', input: transitionInput, site: 'Jira Site'
                         echo jiraTransitionIssue
                 }
             }
