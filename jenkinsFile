@@ -33,12 +33,12 @@ pipeline {
                             sh "git checkout -B master origin/master"
                             def changelogContext = gitChangelog returnType: 'CONTEXT',
                               from: [type: 'REF', value: 'G02R02C02'],
-                              to: [type: 'REF', value: 'master'],
-                              github: [issuePattern: 'fix([0-9]+)\\b', password: 'Bouharoun42&', server: 'https://github.com/reklaabderrahim/jenkins_jira_integration', username: 'reklaabderrahim@hotmail.com']
+                              to: [type: 'REF', value: 'master']
 
                             changelogContext.issues.each { issue ->
                                println issue
                                println issue.name
+                               println issue.issue
                              }
 
 
