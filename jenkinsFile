@@ -31,7 +31,7 @@ pipeline {
                             git credentialsId: '44b99c80-194f-4e87-85ed-94b79f9cbb37', url: 'https://github.com/reklaabderrahim/jenkins_jira_integration.git'
                             sh "git branch -a"
                             sh "git checkout -B master origin/master"
-                            def changelogContext = gitChangelog from: [type: 'REF', value: 'G02R02C03'], returnType: 'CONTEXT', to: [type: 'REF', value: 'master']
+                            def changelogContext = gitChangelog from: [type: 'REF', value: 'G02R02C02'], returnType: 'CONTEXT', to: [type: 'REF', value: 'G02R02C03']
 
 
                             changelogContext.issues.each { issue ->
