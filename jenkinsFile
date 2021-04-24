@@ -25,7 +25,7 @@ pipeline {
                             }
                         } else {
                             currentBuild.result = 'FAILURE'
-                            error('Stopping early…')
+                            error(fixVersion.error)
                         }
 
                 }
