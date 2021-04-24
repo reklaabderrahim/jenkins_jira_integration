@@ -32,7 +32,7 @@ pipeline {
                               from: [type: 'REF', value: 'origin/master'],
                               to: [type: 'REF', value: 'G02R02C02']
 
-                            println changelogContext
+                            println changelogContext.issues
 
                 }
             }
