@@ -35,9 +35,7 @@ pipeline {
 
 
                             changelogContext.issues.each { issue ->
-                               println issue
-                               println issue.name
-                               println issue.commit
+                               println issue.issue
                              }
 
 
