@@ -29,7 +29,7 @@ pipeline {
 //                         }
 
                             def changelogContext = gitChangelog returnType: 'CONTEXT',
-                              from: [type: 'REF', value: '*'],
+                              from: [type: 'REF', value: 'origin/master'],
                               to: [type: 'REF', value: 'G02R02C02']
 
                             println changelogContext
