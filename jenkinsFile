@@ -74,11 +74,12 @@ pipeline {
 //                     println issues
 
                     issueIdentifiers.each { issuekey ->
-                        def jiraIssue = jiraGetIssue failOnError: false, idOrKey: "${issuekey}", site: 'Jira Site'
-                        if (jiraIssue.successful) {
-                            echo jiraIssue.data.toString()
-                            // my_issues.add(jiraIssue.data)
-                        }
+                            echo issuekey
+//                         def jiraIssue = jiraGetIssue failOnError: false, idOrKey: "${issuekey}", site: 'Jira Site'
+//                         if (jiraIssue.successful) {
+//                             echo jiraIssue.data.toString()
+//                             // my_issues.add(jiraIssue.data)
+//                         }
                     }
 
                 }
