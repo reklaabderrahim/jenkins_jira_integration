@@ -87,9 +87,10 @@ pipeline {
         stage('create Fix Version') {
             steps {
                 script {
+                    println "issues: ${my_issues.join(',')}"
                     fixVersion = jiraNewVersion version: [name: "new-fix-version-1.3", project: "JKI"], site: 'Jira Site'
                     println "fix version: ${fixVersion}"
-                    println "issues: ${my_issues.join(',')}"
+
                 }
             }
         }
