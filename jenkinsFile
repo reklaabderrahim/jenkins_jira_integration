@@ -69,7 +69,7 @@ pipeline {
             steps {
                 script {
                     def issueskey = issueIdentifiers.join(',')
-                    searchResults = jiraJqlSearch jql: "project = jenkinsIntegration AND issuekey IN (${issueskey})", site: 'Jira Site'
+                    searchResults = jiraJqlSearch jql: "project = jenkinsIntegration AND issuekey in (${issueskey})", site: 'Jira Site'
                     issues = searchResults.data.issues
                     println issues
 
