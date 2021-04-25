@@ -78,7 +78,7 @@ pipeline {
             steps {
                 script {
                     println "issues: ${issues.join(',')}"
-                    newFixVersion = jiraNewVersion version: [name: "new-fix-version-1.5", project: "JKI"], site: 'Jira Site'
+                    newFixVersion = jiraNewVersion version: [name: "new-fix-version-1.6", project: "JKI"], site: 'Jira Site'
                     println "fix version: ${fixVersion}"
 
                 }
