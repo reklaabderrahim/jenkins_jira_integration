@@ -53,7 +53,7 @@ pipeline {
 
         stage('update issue status') {
             steps {
-                scripts {
+                script {
                     for (i = 0; i < issues.size(); i++) {
                         if (issues[i].issuetype.name == "Story" && issues[i].status.name == "In Progress") {
                             // in review 281
