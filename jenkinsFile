@@ -68,7 +68,8 @@ pipeline {
         stage('search Jira Issues') {
             steps {
                 script {
-                    searchResults = jiraJqlSearch jql: "project = jenkinsIntegration AND issuekey IN ({issueIdentifiers.join(',')})", site: 'Jira Site'
+                    def issueskey = issueIdentifiers.join(',')
+                    searchResults = jiraJqlSearch jql: "project = jenkinsIntegration AND issuekey IN (${issueskey})", site: 'Jira Site'
                     issues = searchResults.data.issues
                     println issues
 
