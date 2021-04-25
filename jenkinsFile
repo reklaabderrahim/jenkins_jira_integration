@@ -47,7 +47,7 @@ pipeline {
 } */
 
 Set<String> issueIdentifiers = new TreeSet<>()
-Set<String> my_issues = new TreeSet<>()
+List<String> my_issues = new ArrayList<>()
 def fixVersion = 'Initial value'
 
 pipeline {
