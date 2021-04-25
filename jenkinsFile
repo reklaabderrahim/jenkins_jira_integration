@@ -47,7 +47,7 @@ pipeline {
 } */
 
 Set<String> issueIdentifiers = new TreeSet<>()
-Set<String> issues = new TreeSet<>()
+Set<String> my_issues = new TreeSet<>()
 def fixVersion = 'Initial value'
 
 pipeline {
@@ -76,10 +76,9 @@ pipeline {
                     issueIdentifiers.each { issuekey ->
                         try {
                             def jiraIssue = jiraGetIssue failOnError: false, idOrKey: "${issuekey}", site: 'Jira Site'
-                            println jiraIssue.data
-                            issues.add(jiraIssue.data)
-                        } catch(error) {
-                        }
+                            echo jiraIssue.data.toString()
+                            my_issues.add(jiraIssue)
+                        } catch(error) {}
                     }
 
                 }
@@ -90,14 +89,14 @@ pipeline {
                 script {
                     fixVersion = jiraNewVersion version: [name: "new-fix-version-1.3", project: "JKI"], site: 'Jira Site'
                     println "fix version: ${fixVersion}"
-                    println "issues: ${issues.join(',')}"
+                    println "issues: ${my_issues.join(',')}"
                 }
             }
         }
         stage('Update the issues') {
             steps {
                 script {
-                    for (i = 0; i <issues.size(); i++) {
+                    for (i = 0; i <my_issues.size(); i++) {
                       def testIssue = [fields: [fixVersions: [fixVersion.data]]]
                       response = jiraEditIssue idOrKey: issues[i].key, issue: testIssue, site: 'Jira Site'
                     }
