@@ -1,57 +1,12 @@
-/*
-pipeline {
-    agent any
-    stages {
-        stage('Create Jira Issue') {
-            steps {
-                script{
-//                      def issue = [fields: [ project: [key: 'JKI'],
-//                                              summary: 'New JIRA Created from Jenkins.',
-//                                              description: 'New JIRA Created from Jenkins.',
-//                                              issuetype: [name: 'Task']]]
-//                       def newIssue = jiraNewIssue issue: issue, site: 'Jira Site'
-//                       echo newIssue.data.key
-
-//                       def transitionInput = [ transition: [ id: 31] ]
-//                         jiraTransitionIssue idOrKey: 'JKI-1', input: transitionInput, site: 'Jira Site'
-
-//                         def searchResults = jiraJqlSearch jql: "project = jenkinsIntegration AND issuekey = 'JKI-1'", site: 'Jira Site'
-//                         def issues = searchResults.data.issues
-//                         println issues.get(0).fields.issuetype
-//                         def fixVersion = jiraNewVersion version: [name: "new-fix-version-1.0", project: "JKI"], site: 'Jira Site', failOnError: false
-//                         if (fixVersion.successful) {
-//                             for (i = 0; i <issues.size(); i++) {
-//                               def testIssue = [fields: [fixVersions: [fixVersion.data]]]
-//                               response = jiraEditIssue idOrKey: issues[i].key, issue: testIssue, site: 'Jira Site'
-//                             }
-//                         } else {
-//                             currentBuild.result = 'FAILURE'
-//                             error(fixVersion.error)
-//                         }
-
-//                             git credentialsId: '44b99c80-194f-4e87-85ed-94b79f9cbb37', url: 'https://github.com/reklaabderrahim/jenkins_jira_integration.git'
-//                             sh "git branch -a"
-//                             sh "git checkout -B master origin/master"
-                            def changelogContext = gitChangelog from: [type: 'REF', value: 'G02R02C03'], returnType: 'CONTEXT'
-
-
-                            changelogContext.issues.each { issue ->
-                               println issue.issue
-                             }
-
-
-                }
-            }
-        }
-    }
-} */
-
 Set<String> issueIdentifiers = new TreeSet<>()
 def issues = "Initial"
 def fixVersion = 'Initial value'
 
 pipeline {
     agent any
+     parameters {
+        string(name: 'fixVersion', defaultValue: '', description: 'GxxRxxCxx')
+    }
     stages {
         stage('Fetch commit keys') {
             steps {
@@ -59,7 +14,6 @@ pipeline {
                     def changelogContext = gitChangelog from: [type: 'REF', value: 'G02R02C02'], returnType: 'CONTEXT'
                     changelogContext.issues.each { issue ->
                       issueIdentifiers.add(issue.issue)
-                      println issue.issue
                     }
 
                 }
@@ -77,10 +31,7 @@ pipeline {
         stage('create Fix Version') {
             steps {
                 script {
-                    println "issues: ${issues.join(',')}"
-                    newFixVersion = jiraNewVersion version: [name: "new-fix-version-1.6", project: "JKI"], site: 'Jira Site'
-                    println "fix version: ${fixVersion}"
-
+                    newFixVersion = jiraNewVersion version: [name: "${params.fixVersion}", project: "JKI"], site: 'Jira Site'
                 }
             }
         }
