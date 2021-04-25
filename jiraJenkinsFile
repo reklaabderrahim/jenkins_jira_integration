@@ -1,0 +1,31 @@
+Set<String> issueIdentifiers = new TreeSet<>()
+def issues = 'Initial value'
+def fixVersion = 'Initial value'
+
+pipeline {
+    agent any
+    stages {
+        stage('Fetch commit keys') {
+            def changelogContext = gitChangelog from: [type: 'REF', value: 'G02R02C03'], returnType: 'CONTEXT'
+            changelogContext.issues.each { issue ->
+              issueIdentifiers.add(issue.issue)
+              println issue.issue
+             }
+        }
+        stage('search Jira Issues') {
+            searchResults = jiraJqlSearch jql: "project = jenkinsIntegration AND issuekey IN ({issueIdentifiers.join(',')})", site: 'Jira Site'
+            issues = searchResults.data.issues
+            println issues
+        }
+        stage('create Fix Version') {
+            fixVersion = jiraNewVersion version: [name: "new-fix-version-1.1", project: "JKI"], site: 'Jira Site'
+            println fixVersion
+        }
+        stage('Update the issues') {
+            for (i = 0; i <issues.size(); i++) {
+              def testIssue = [fields: [fixVersions: [fixVersion.data]]]
+              response = jiraEditIssue idOrKey: issues[i].key, issue: testIssue, site: 'Jira Site'
+            }
+        }
+    }
+}
