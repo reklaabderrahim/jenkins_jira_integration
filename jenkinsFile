@@ -74,9 +74,13 @@ pipeline {
 //                     println issues
 
                     issueIdentifiers.each { issuekey ->
-                        def jiraIssue = jiraGetIssue failOnError: false, idOrKey: "${issuekey}", site: 'Jira Site'
-                        println jiraIssue.data
-                        issues.add(jiraIssue.data)
+                        try {
+                            def jiraIssue = jiraGetIssue failOnError: false, idOrKey: "${issuekey}", site: 'Jira Site'
+                            println jiraIssue.data
+                            issues.add(jiraIssue.data)
+                        } catch(error) {
+                            println error
+                        }
                     }
 
                 }
@@ -85,7 +89,7 @@ pipeline {
         stage('create Fix Version') {
             steps {
                 script {
-                    fixVersion = jiraNewVersion version: [name: "new-fix-version-1.1", project: "JKI"], site: 'Jira Site'
+                    fixVersion = jiraNewVersion version: [name: "new-fix-version-1.2", project: "JKI"], site: 'Jira Site'
                     println fixVersion
                     println issues
                 }
