@@ -78,17 +78,19 @@ pipeline {
             steps {
                 script {
                     println "issues: ${issues.join(',')}"
-                    fixVersion = jiraNewVersion version: [name: "new-fix-version-1.5", project: "JKI"], site: 'Jira Site'
+                    newFixVersion = jiraNewVersion version: [name: "new-fix-version-1.5", project: "JKI"], site: 'Jira Site'
                     println "fix version: ${fixVersion}"
 
                 }
             }
         }
-        stage('Update the issues') {
+        stage('append the fix version') {
             steps {
                 script {
                     for (i = 0; i <issues.size(); i++) {
-                      def testIssue = [fields: [fixVersions: [fixVersion.data]]]
+                      def result = jiraGetIssue idOrKey: issues[i].key
+                      def fixVersions = result.data.fields.fixVersions << newFixVersion.data
+                      def testIssue = [fields: [fixVersions: fixVersions]]
                       response = jiraEditIssue idOrKey: issues[i].key, issue: testIssue, site: 'Jira Site'
                     }
                 }
