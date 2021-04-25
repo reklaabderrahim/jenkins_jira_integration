@@ -77,7 +77,7 @@ pipeline {
                         try {
                             def jiraIssue = jiraGetIssue idOrKey: "${issuekey}", site: 'Jira Site'
                             echo jiraIssue.data.toString()
-                            // my_issues.add(jiraIssue.data)
+                            my_issues.add(jiraIssue.data)
                         } catch(error) { }
                     }
 
