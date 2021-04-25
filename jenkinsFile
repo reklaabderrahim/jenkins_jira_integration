@@ -47,7 +47,7 @@ pipeline {
 } */
 
 Set<String> issueIdentifiers = new TreeSet<>()
-List<String> my_issues = new ArrayList<>()
+def issues = "Initial"
 def fixVersion = 'Initial value'
 
 pipeline {
@@ -68,22 +68,9 @@ pipeline {
         stage('search Jira Issues') {
             steps {
                 script {
-//                     def issueskey = issueIdentifiers.join(',')
-//                     searchResults = jiraJqlSearch jql: "project = JKI AND issuekey in (${issueskey})", site: 'Jira Site', failOnError: false
-//                     issues = searchResults.data.issues
-//                     println issues
-
-//                     issueIdentifiers.each { issuekey ->
-//                         try {
-//                             def jiraIssue = jiraGetIssue idOrKey: "${issuekey}", site: 'Jira Site'
-//                             echo jiraIssue.data.toString()
-//                             my_issues.add(jiraIssue.data)
-//                         } catch(error) { }
-//                     }
-                            def jiraIssue = jiraGetIssue idOrKey: "JKI-1", site: 'Jira Site'
-                            echo jiraIssue.data.toString()
-                            my_issues.add(jiraIssue.data)
-
+                    def issueskey = issueIdentifiers.join(',')
+                    searchResults = jiraJqlSearch jql: "project = JKI AND issuekey in (${issueskey})", site: 'Jira Site', failOnError: false
+                    issues = searchResults.data.issues
                 }
             }
         }
