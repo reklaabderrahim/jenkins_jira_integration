@@ -47,7 +47,7 @@ pipeline {
 } */
 
 Set<String> issueIdentifiers = new TreeSet<>()
-def issues = 'Initial value'
+Set<String> issues = new TreeSet<>()
 def fixVersion = 'Initial value'
 
 pipeline {
@@ -73,9 +73,11 @@ pipeline {
 //                     issues = searchResults.data.issues
 //                     println issues
 
-                    def response = httpRequest "http://192.168.1.22:8001/api/2/search?jql=project%20%3D%20JKI%20AND%20issuekey%20in%20%28%24%7Bissueskey%7D%29&startAt=0&maxResults=100&validateQuery=none"
-                    println("Status: "+response.status)
-                    println("Content: "+response.content)
+                    issueIdentifiers.each { issuekey ->
+                        def jiraIssue = jiraGetIssue failOnError: false, idOrKey: "${issuekey}", site: 'Jira Site'
+                        println jiraIssue.data
+                        issues.add(jiraIssue.data)
+                    }
 
                 }
             }
