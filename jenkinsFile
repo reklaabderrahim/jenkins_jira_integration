@@ -56,7 +56,7 @@ pipeline {
         stage('Fetch commit keys') {
             steps {
                 script {
-                    def changelogContext = gitChangelog from: [type: 'REF', value: 'G02R02C03'], returnType: 'CONTEXT'
+                    def changelogContext = gitChangelog from: [type: 'REF', value: 'G02R02C02'], returnType: 'CONTEXT'
                     changelogContext.issues.each { issue ->
                       issueIdentifiers.add(issue.issue)
                       println issue.issue
@@ -79,7 +79,6 @@ pipeline {
                             println jiraIssue.data
                             issues.add(jiraIssue.data)
                         } catch(error) {
-                            println error
                         }
                     }
 
@@ -89,9 +88,9 @@ pipeline {
         stage('create Fix Version') {
             steps {
                 script {
-                    fixVersion = jiraNewVersion version: [name: "new-fix-version-1.2", project: "JKI"], site: 'Jira Site'
-                    println fixVersion
-                    println issues
+                    fixVersion = jiraNewVersion version: [name: "new-fix-version-1.3", project: "JKI"], site: 'Jira Site'
+                    println "fix version: ${fixVersion}"
+                    println "issues: ${issues.join(',')}"
                 }
             }
         }
