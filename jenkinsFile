@@ -55,15 +55,15 @@ pipeline {
             steps {
                 script {
                     for (i = 0; i < issues.size(); i++) {
-                        if (issues[i].issuetype.name == "Story" && issues[i].status.name == "In Progress") {
+                        if (issues[i].fields.issuetype.name == "Story" && issues[i].fields.status.name == "In Progress") {
                             // in review 281
                             def transitionInput = [ transition: [ id: 31] ]
                             jiraTransitionIssue idOrKey: issues[i].key, input: transitionInput, site: 'Jira Site'
-                        } else if (issues[i].issuetype.name == "Bug" && issues[i].status.name == "In Progress") {
+                        } else if (issues[i].fields.issuetype.name == "Bug" && issues[i].fields.status.name == "In Progress") {
                             // ready for test 101
                             def transitionInput = [ transition: [ id: 31] ]
                             jiraTransitionIssue idOrKey: issues[i].key, input: transitionInput, site: 'Jira Site'
-                        } else if (issues[i].issuetype.name == "Technical Story" && issues[i].status.name == "In Progress") {
+                        } else if (issues[i].fields.issuetype.name == "Technical Story" && issues[i].fields.status.name == "In Progress") {
                             // done 21
                             def transitionInput = [ transition: [ id: 31] ]
                             jiraTransitionIssue idOrKey: issues[i].key, input: transitionInput, site: 'Jira Site'
