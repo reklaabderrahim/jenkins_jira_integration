@@ -68,6 +68,13 @@ pipeline {
         stage('search Jira Issues') {
             steps {
                 script {
+                 def issue = [fields: [ project: [key: 'JKI'],
+                                         summary: 'New BUG Created from Jenkins.',
+                                         description: 'New JIRA Created from Jenkins.',
+                                         issuetype: [name: 'Bug']]]
+                  def newIssue = jiraNewIssue issue: issue, site: 'Jira Site'
+                  echo newIssue.data.key
+
                     def issueskey = issueIdentifiers.join(',')
                     searchResults = jiraJqlSearch jql: "project = jenkinsIntegration AND issuekey in (${issueskey})", site: 'Jira Site'
                     issues = searchResults.data.issues
